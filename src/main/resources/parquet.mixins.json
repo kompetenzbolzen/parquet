@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "re.jag.parquet.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+  ],
+  "server": [
+    "VanillaMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

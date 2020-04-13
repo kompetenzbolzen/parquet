@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "parquet",
+  "version": "${version}",
+
+  "name": "Vanilla",
+  "description": "Who knows",
+  "authors": [
+    "kompetenzbolzen"
+  ],
+  "contact": {
+    "homepage": "https://jag.re/",
+    "sources": "https://github.com/"
+  },
+
+  "license": "",
+  "icon": "",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "re.jag.parquet.Parquet"
+    ]
+  },
+  "mixins": [
+    "parquet.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.7.4",
+    "minecraft": "1.15.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}
