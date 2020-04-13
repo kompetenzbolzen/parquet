@@ -6,7 +6,11 @@
   "mixins": [
   ],
   "server": [
-    "VanillaMixin"
+    "VanillaMixin",
+    "CommandManagerMixin",
+    "ServerPlayerEntityMixin"
+  ],
+  "client": [
   ],
   "injectors": {
     "defaultRequire": 1
