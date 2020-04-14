@@ -1,7 +1,5 @@
 package re.jag.parquet.mixin;
 
-import re.jag.parquet.commands.CameraModeData;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,6 +13,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.dimension.DimensionType;
+import re.jag.parquet.interfaces.CameraModeData;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -60,7 +59,8 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Ca
 		
 		this.saved_dimension = DimensionType.byRawId(dim_raw_id);
 	}
-
+	
+	//INTERFACE CameraModeData
 	public boolean saveCameraPosition() {
 		if (!this.save_active) {
 			this.saved_x = getX();
