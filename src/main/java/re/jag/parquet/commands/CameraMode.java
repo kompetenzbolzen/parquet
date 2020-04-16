@@ -19,11 +19,14 @@ import re.jag.parquet.interfaces.CameraModeData;
 
 public class CameraMode {
 	public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-		LiteralArgumentBuilder<ServerCommandSource> camermode = literal("c").
+		/*
+		 * If not used with fabric-carpet, /s and /c can be used.
+		 */
+		LiteralArgumentBuilder<ServerCommandSource> camermode = literal("x").
 				executes((c) -> camera( c.getSource(), c.getSource().getPlayer())).
 					then(argument("player", EntityArgumentType.player()).
 						executes( (c) -> camera(c.getSource(), EntityArgumentType.getPlayer(c, "player"))));
-		LiteralArgumentBuilder<ServerCommandSource> survivalmode = literal("s").
+		LiteralArgumentBuilder<ServerCommandSource> survivalmode = literal("a").
 				executes((c) -> survival( c.getSource(), c.getSource().getPlayer())).
 					then(argument("player", EntityArgumentType.player()).
 						executes( (c) -> survival(c.getSource(), EntityArgumentType.getPlayer(c, "player"))));
