@@ -47,18 +47,30 @@ public class Savedata {
 	                then(literal("stats").
 	                		then(argument("player", EntityArgumentType.player()).
 			                		then(argument("criteria", ObjectiveCriteriaArgumentType.objectiveCriteria()).
-			                				executes((c)->print_player_stat(c.getSource(), EntityArgumentType.getPlayer(c, "player"), ObjectiveCriteriaArgumentType.getCriteria(c, "criteria"))).
+			                				executes((c) -> print_player_stat (
+			                						c.getSource(),
+			                						EntityArgumentType.getPlayer(c, "player"),
+			                						ObjectiveCriteriaArgumentType.getCriteria(c, "criteria") 
+			                				)).
 			                				then(literal("import").then(argument("score", ObjectiveArgumentType.objective()).
-			                						executes((c) -> import_stat_to_scoreboard(c.getSource(), EntityArgumentType.getPlayer(c, "player"), ObjectiveCriteriaArgumentType.getCriteria(c, "criteria"), 
+			                						executes((c) -> import_stat_to_scoreboard (
+			                								c.getSource(), 
+			                								EntityArgumentType.getPlayer(c, "player"), 
+			                								ObjectiveCriteriaArgumentType.getCriteria(c, "criteria"), 
 			                								ObjectiveArgumentType.getWritableObjective(c, "score"), 1)).
 			                						then(argument("multiplier", FloatArgumentType.floatArg()).
-			                								executes((c) ->  import_stat_to_scoreboard(c.getSource(), EntityArgumentType.getPlayer(c, "player"), ObjectiveCriteriaArgumentType.getCriteria(c, "criteria"), 
-			                										ObjectiveArgumentType.getWritableObjective(c, "score"), FloatArgumentType.getFloat(c, "multiplier")))))
-		            						))
-		            				)
-                		)
-                	;
-		 
+			                								executes((c) ->  import_stat_to_scoreboard(
+			                										c.getSource(), 
+			                										EntityArgumentType.getPlayer(c, "player"), 
+			                										ObjectiveCriteriaArgumentType.getCriteria(c, "criteria"), 
+			                										ObjectiveArgumentType.getWritableObjective(c, "score"), 
+			                										FloatArgumentType.getFloat(c, "multiplier"))
+			                								)
+			                						)
+			                				))
+			                		)
+	                				)
+                	);
 		 dispatcher.register(savedata);
 	}
 	
