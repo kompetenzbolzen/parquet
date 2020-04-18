@@ -9,7 +9,6 @@ import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.ShulkerBoxBlock;
 import net.minecraft.block.dispenser.FallibleItemDispenserBehavior;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.item.AutomaticItemPlacementContext;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.DyeItem;
