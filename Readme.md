@@ -43,4 +43,4 @@ A dispenser pointing into a cauldron can:
 
 #### ShulkerBoxes
 
-A dispenser pointing into a Shulker Box can dye it with dye items.
+A dispenser pointing into an undyed Shulker Box can apply a color.

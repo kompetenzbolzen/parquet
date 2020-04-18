@@ -1,5 +1,6 @@
 package re.jag.parquet;
 
+import java.awt.Color;
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -31,6 +32,9 @@ public class DyeItemDispenserBehavior extends FallibleItemDispenserBehavior{
 		Item item = stack.getItem();
 		
 		if (block instanceof ShulkerBoxBlock && item instanceof DyeItem && world instanceof ServerWorld) {
+			if ( ((ShulkerBoxBlock)block).getColor() != null )
+				return stack;
+			
 			BlockEntity block_entity = world.getBlockEntity(block_pos);
 			List<ItemStack> dropped_stacks = ShulkerBoxBlock.getDroppedStacks(state, (ServerWorld)world, block_pos, block_entity);
 			
