@@ -6,7 +6,7 @@ import net.fabricmc.api.ModInitializer;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.block.ShulkerBoxBlock;
-import net.minecraft.block.dispenser.BlockPlacementDispenserBehavior;
+import net.minecraft.item.DyeItem;
 import net.minecraft.item.Items;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.DyeColor;
@@ -28,10 +28,16 @@ public class Parquet implements ModInitializer {
 	
 	public static void registerCustomDispenserBehavior() {
 		//TODO Maybe rewrite Cauldron onUse to not only acccept players?
+		//refactor CauldronBlock onUse
+		
+		//This is a rather hacky implementation
 		DispenserBlock.registerBehavior(Blocks.SHULKER_BOX.asItem(), new ShulkerPlacementDispenserBehavior());	
 		for (DyeColor dye_color : DyeColor.values()) {
 			DispenserBlock.registerBehavior(ShulkerBoxBlock.get(dye_color).asItem(), new ShulkerPlacementDispenserBehavior());
+			
+			DispenserBlock.registerBehavior(DyeItem.byColor(dye_color).asItem(), new DyeItemDispenserBehavior());
 		}
+		
 		
 		DispenserBlock.registerBehavior(Items.WATER_BUCKET, new WaterBucketDispenserBehavior());
 		DispenserBlock.registerBehavior(Items.BUCKET, new BucketDispenserBehavior());
