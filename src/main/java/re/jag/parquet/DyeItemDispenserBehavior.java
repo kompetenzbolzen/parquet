@@ -1,6 +1,5 @@
 package re.jag.parquet;
 
-import java.awt.Color;
 import java.util.List;
 
 import net.minecraft.block.Block;

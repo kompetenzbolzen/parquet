@@ -24,7 +24,9 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew remapJar
+    - name: Remove intermediary JAR
+      run: rm build/libs/parquet*-dev.jar
     - uses: actions/upload-artifact@v1
       with:
         name: parquet
-        path: build/libs/
+        path: build/libs/parquet*.jar

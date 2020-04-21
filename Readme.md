@@ -1,3 +1,5 @@
+![Java CI with Gradle](https://github.com/kompetenzbolzen/parquet/workflows/Java%20CI%20with%20Gradle/badge.svg)
+
 # Parquet
 
 Minecraft Java Mod for Fabric Loader
