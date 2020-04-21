@@ -26,7 +26,9 @@ jobs:
       run: ./gradlew remapJar
     - name: Remove intermediary JAR
       run: rm build/libs/parquet*-dev.jar
-    - uses: actions/upload-artifact@v1
+    - name: Upload to release
+      uses: JasonEtco/upload-to-release@master
       with:
-        name: parquet
-        path: build/libs
+        args: build/lib/parquet*.jar
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
