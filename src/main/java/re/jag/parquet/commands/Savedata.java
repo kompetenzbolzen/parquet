@@ -7,7 +7,6 @@ import static net.minecraft.server.command.CommandManager.argument;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.authlib.GameProfile;
@@ -28,7 +27,6 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.StatType;
-import net.minecraft.stat.Stats;
 import net.minecraft.block.Block;
 
 public class Savedata {
@@ -75,6 +73,7 @@ public class Savedata {
 	}
 	
 	private static int help(ServerCommandSource source) {
+		//TODO Help Text
 		source.sendFeedback(new LiteralText("Test"), false);
 		return 1;
 	}
@@ -125,72 +124,43 @@ public class Savedata {
 		return 0;
 	}
 	
-	private static int get_player_stat(ServerCommandSource source, ServerPlayerEntity player, ScoreboardCriterion stat) {
-		
-		String criteria_name = stat.getName();
+	private static int get_player_stat(ServerCommandSource source, ServerPlayerEntity player, ScoreboardCriterion criteria) {
+		//TODO Add offline player stat read
+		String criteria_name = criteria.getName();
 		int criteria_name_seperator = criteria_name.indexOf(':');
 		
 		String registry_name="";
 		String stat_name="";
 		
 		if (criteria_name_seperator < 0) {
-			source.sendError(new LiteralText("Invalid Argument"));
+			source.sendError(new LiteralText("Expected valid registry and stat ID"));
 			return -1;
 		} else {
 			registry_name = criteria_name.substring(0,criteria_name_seperator);
 			stat_name = criteria_name.substring(criteria_name_seperator + 1, criteria_name.length() );
 		}
 		
-		//Not good but whatever
-		int returned_stat = -1;
-		try {
-			switch(registry_name) {
-			case "minecraft.mined":
-				//Block
-				returned_stat = get_stat_block(player, registry_name, stat_name);
-				break;
-			case "minecraft.crafted":
-			case "minecraft.used":
-			case "minecraft.broken":
-			case "minecraft.picked_up":
-			case "minecraft.dropped":
-				returned_stat = get_stat_item(player, registry_name, stat_name);
-				break;
-			case "minecraft.custom":
-				returned_stat = get_stat_custom(player, stat_name);
-				//Custom
-				break;
-			default:
-				source.sendError(new LiteralText("Unknown Statistic"));
-				return -1;
-			};
-		} catch (CommandSyntaxException e) {
-			source.sendError(new LiteralText("Failed: " + e.getContext()));
+		StatType<?> stat_type = Registry.STAT_TYPE.get(Identifier.splitOn(registry_name, '.'));
+		Object stat_obj = stat_type.getRegistry().get(Identifier.splitOn(stat_name, '.'));
+		
+		if (stat_obj instanceof Block) {
+			@SuppressWarnings("unchecked")
+			StatType<Block> stat_type_block = (StatType<Block>) stat_type;
+			Stat<Block> stat = stat_type_block.getOrCreateStat((Block) stat_obj);
+			return player.getStatHandler().getStat(stat);
+		} else if (stat_obj instanceof Item) {
+			@SuppressWarnings("unchecked")
+			StatType<Item> stat_type_item = (StatType<Item>) stat_type;
+			Stat<Item> stat = stat_type_item.getOrCreateStat((Item) stat_obj);
+			return player.getStatHandler().getStat(stat);	
+		} else if (stat_obj instanceof Identifier) {
+			@SuppressWarnings("unchecked")
+			StatType<Identifier> stat_type_ident = (StatType<Identifier>) stat_type;
+			Stat<Identifier> stat = stat_type_ident.getOrCreateStat((Identifier) stat_obj);
+			return player.getStatHandler().getStat(stat);
+		} else {
+			source.sendError(new LiteralText("Unknown Object"));
 			return -1;
 		}
-	
-		return returned_stat;
-	}
-	
-	private static int get_stat_block(ServerPlayerEntity player, String registry_name, String stat_name) throws CommandSyntaxException {
-		@SuppressWarnings("unchecked")
-		StatType<Block> stat_type = (StatType<Block>) Registry.STAT_TYPE.get(Identifier.splitOn(registry_name, '.'));
-		Block block = Registry.BLOCK.get(Identifier.splitOn(stat_name, '.'));
-		Stat<Block> stat = stat_type.getOrCreateStat(block);	
-		return player.getStatHandler().getStat(stat);
-	}
-
-	private static int get_stat_item(ServerPlayerEntity player, String registry_name, String stat_name) throws CommandSyntaxException {
-		@SuppressWarnings("unchecked")
-		StatType<Item> stat_type = (StatType<Item>) Registry.STAT_TYPE.get(Identifier.splitOn(registry_name, '.'));
-		Item item = Registry.ITEM.get(Identifier.splitOn(stat_name, '.'));
-		Stat<Item> stat = stat_type.getOrCreateStat(item);	
-		return player.getStatHandler().getStat(stat);
-	}
-	
-	private static int get_stat_custom(ServerPlayerEntity player, String stat_name) throws CommandSyntaxException {
-		Stat<Identifier> stat = Stats.CUSTOM.getOrCreateStat(Identifier.splitOn(stat_name, '.'));
-		return player.getStatHandler().getStat(stat);
-		
 	}
 }
