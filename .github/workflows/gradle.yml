@@ -3,7 +3,10 @@
 
 name: Build release
 on:
-  push: tags
+  push: 
+    tags:
+      - '*'
+
 
 jobs:
   build:
