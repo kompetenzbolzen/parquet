@@ -44,3 +44,9 @@ A dispenser pointing into a cauldron can:
 #### ShulkerBoxes
 
 A dispenser pointing into an undyed Shulker Box can apply a color.
+
+## Fixes
+
+### [MC-111534](https://bugs.mojang.com/browse/MC-111534)
+
+Stat `minecraft.used:minecraft.firework_rocket` is only incremented, when the rocket is used on the ground, not during elytra flight.

@@ -9,7 +9,8 @@
     "VanillaMixin",
     "CommandManagerMixin",
     "ServerPlayerEntityMixin",
-    "BootstrapMixin"
+    "BootstrapMixin",
+    "FireWorkItemMixin"
   ],
   "client": [
   ],
