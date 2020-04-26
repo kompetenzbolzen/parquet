@@ -27,7 +27,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Ca
 	}
 
 	private double saved_x, saved_y, saved_z;
-	private DimensionType saved_dimension;
+	private int saved_dimension;
 	private boolean save_active = false;
 	
 	@Shadow
@@ -39,7 +39,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Ca
 	@Inject(method="writeCustomDataToTag", at = @At("RETURN"))
 	private void onWriteCustomDataToTag(CompoundTag arg, CallbackInfo ci) {
 		arg.put("ParquetSavedPos", (Tag)toListTag(new double[] { saved_x, saved_y, saved_z }));
-		arg.putInt("ParquetSavedDimension", this.dimension.getRawId());
+		arg.putInt("ParquetSavedDimension", saved_dimension);
 		arg.putBoolean("ParquetSaveActive", save_active);
 	}
 	
@@ -47,7 +47,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Ca
 	private void onReadCustomDataFromTag(CompoundTag arg, CallbackInfo ci) {
 		ListTag lv = arg.getList("ParquetSavedPos", 6);
 		
-		int dim_raw_id = arg.getInt("ParquetSavedDimension");
+		this.saved_dimension = arg.getInt("ParquetSavedDimension");
 		
 		this.save_active = arg.getBoolean("ParquetSaveActive");
 		
@@ -56,8 +56,6 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Ca
 			this.saved_y = lv.getDouble(1);
 			this.saved_z = lv.getDouble(2);
 		}
-		
-		this.saved_dimension = DimensionType.byRawId(dim_raw_id);
 	}
 	
 	//INTERFACE CameraModeData
@@ -67,7 +65,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Ca
 			this.saved_y = getY();
 			this.saved_z = getZ();
 			
-			this.saved_dimension = this.dimension;
+			this.saved_dimension = this.dimension.getRawId();
 			
 			this.save_active = true;
 			
@@ -78,7 +76,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Ca
 	
 	public boolean restoreCameraPosition() {
 		if (this.save_active) {
-			this.teleport(server.getWorld(saved_dimension), saved_x, saved_y, saved_z, 0,0);
+			this.teleport(server.getWorld(DimensionType.byRawId(saved_dimension)), saved_x, saved_y, saved_z, 0,0);
 			
 			this.save_active = false;
 			
