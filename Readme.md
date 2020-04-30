@@ -22,7 +22,7 @@ List all player savefiles, UUIDs are resolved to names if in usercache
 
 #### `stats`
 
-Query user statistics and import them to the scoreboard. 
+Query user statistics and import them to the scoreboard. This work for both online and offline players, if they are in usercache. 
 
 `/savedata stats PLAYER CRITERIA [import OBJECTIVE [MULTIPLIER]]`
 
