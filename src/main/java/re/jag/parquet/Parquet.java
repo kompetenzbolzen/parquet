@@ -1,5 +1,8 @@
 package re.jag.parquet;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.mojang.brigadier.CommandDispatcher;
 
 import net.fabricmc.api.ModInitializer;
@@ -14,7 +17,8 @@ import re.jag.parquet.commands.CameraMode;
 import re.jag.parquet.commands.Savedata;
 
 public class Parquet implements ModInitializer {
-
+	public static final Logger LOG = LogManager.getLogger();
+	
 	@Override
 	public void onInitialize() {
 	
@@ -23,7 +27,8 @@ public class Parquet implements ModInitializer {
 	public static void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {
 		Savedata.register(dispatcher);
 		CameraMode.register(dispatcher);
-		System.out.println("[parquet] Registered commands");
+		
+		LOG.info("[PQ] Registered commands");
 	}
 	
 	public static void registerCustomDispenserBehavior() {
@@ -44,7 +49,7 @@ public class Parquet implements ModInitializer {
 		DispenserBlock.registerBehavior(Items.GLASS_BOTTLE, new GlassBottleDispenserBehavior());
 		DispenserBlock.registerBehavior(Items.POTION, new PotionDispenserBehavior());
 		
-		System.out.println("Registered Custom Dispenser behaviors");
+		LOG.info("[PQ] Registered Custom Dispenser behaviors");
 	}
 
 }

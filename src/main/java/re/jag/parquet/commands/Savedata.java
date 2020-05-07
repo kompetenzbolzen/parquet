@@ -27,6 +27,7 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.dimension.DimensionType;
+import re.jag.parquet.Parquet;
 import net.minecraft.stat.ServerStatHandler;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.StatType;
@@ -117,6 +118,7 @@ public class Savedata {
 		
 		GameProfile profile = source.getMinecraftServer().getUserCache().findByName(player_name);
 		if (profile == null) {
+			Parquet.LOG.debug("Savedata: User not in Usercache");
 			return null;
 		}
 	
@@ -126,6 +128,7 @@ public class Savedata {
 		File file2 = new File(file, player_uuid + ".json");
 	
 		if (!file2.exists()) {
+			Parquet.LOG.debug("Savedata: user stat file not found");
 			return null;
 		}
 
