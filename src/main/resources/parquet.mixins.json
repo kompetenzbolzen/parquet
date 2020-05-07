@@ -10,7 +10,8 @@
     "CommandManagerMixin",
     "ServerPlayerEntityMixin",
     "BootstrapMixin",
-    "FireWorkItemMixin"
+    "FireWorkItemMixin",
+    "SellMapFactoryMixin"
   ],
   "client": [
   ],

@@ -50,3 +50,9 @@ A dispenser pointing into an undyed Shulker Box can apply a color.
 ### [MC-111534](https://bugs.mojang.com/browse/MC-111534)
 
 Stat `minecraft.used:minecraft.firework_rocket` is only incremented, when the rocket is used on the ground, not during elytra flight.
+
+## "Fixes"
+
+### [MC-126244](https://bugs.mojang.com/browse/MC-126244)
+
+Cartographer map trade replaced with dummy map around (0,0) to mitigate server crash in large worlds due to poor implementation of locateStructure.
