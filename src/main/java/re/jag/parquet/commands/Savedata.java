@@ -80,6 +80,9 @@ public class Savedata {
 	}
 	
 	private static int list_local_saves(ServerCommandSource source) {
+		//TODO 1.16 fix
+
+		/*
 		String uuid_list[] = source.getMinecraftServer().getWorld(DimensionType.OVERWORLD).getSaveHandler().getSavedPlayerIds();
 		
 		for (int i = 0; i < uuid_list.length; i++) {
@@ -91,7 +94,9 @@ public class Savedata {
 			
 			source.sendFeedback(new LiteralText(name + " (" + uuid_list[i] + ")"), false);
 		}
-		
+		*/
+
+		source.sendError(new LiteralText("1.16 Incompatability"));
 		return 1;
 	}
 	
@@ -115,7 +120,14 @@ public class Savedata {
 		if (player != null) {
 			return player.getStatHandler();
 		}
-		
+
+		return null;
+
+		//TODO 1.16 fix
+
+		//WorldSaveHandler reworked
+
+		/*
 		GameProfile profile = source.getMinecraftServer().getUserCache().findByName(player_name);
 		if (profile == null) {
 			Parquet.LOG.debug("Savedata: User not in Usercache");
@@ -133,6 +145,7 @@ public class Savedata {
 		}
 
 		return new ServerStatHandler(source.getMinecraftServer(), file2);
+		*/
 	}
 
 	private static int print_player_stat(ServerCommandSource source, String player, ScoreboardCriterion stat) {
