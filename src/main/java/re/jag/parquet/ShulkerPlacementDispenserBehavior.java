@@ -16,7 +16,7 @@ import net.minecraft.util.math.Direction;
 
 public class ShulkerPlacementDispenserBehavior extends BlockPlacementDispenserBehavior{
 	protected ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
-		this.success = false;
+		//this.success = false;
 		
 		Item item = stack.getItem();
 		
@@ -36,7 +36,8 @@ public class ShulkerPlacementDispenserBehavior extends BlockPlacementDispenserBe
 						}
 						((CauldronBlock)state.getBlock()).setLevel(pointer.getWorld(), block_pos, state, fill_level - 1);
 						
-						this.success = true;
+						//this.success = true;
+						this.setSuccess(true);
 						return itemStack5;
 					}
 					

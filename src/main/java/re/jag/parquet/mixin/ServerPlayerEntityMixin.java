@@ -1,5 +1,6 @@
 package re.jag.parquet.mixin;
 
+import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,8 +23,8 @@ import net.minecraft.nbt.Tag;
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerEntityMixin extends PlayerEntity implements CameraModeData{
 	
-	public ServerPlayerEntityMixin(World world, GameProfile profile) {
-		super(world, profile);
+	public ServerPlayerEntityMixin(World world, BlockPos pos, GameProfile profile) {
+		super(world, pos, profile);
 	}
 
 	private double saved_x, saved_y, saved_z;

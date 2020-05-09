@@ -23,7 +23,7 @@ import net.minecraft.world.World;
 
 public class DyeItemDispenserBehavior extends FallibleItemDispenserBehavior{
 	public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
-		this.success = false;
+		//this.success = false;
 		World world = pointer.getWorld();
 		BlockPos block_pos = pointer.getBlockPos().offset((Direction)pointer.getBlockState().get(DispenserBlock.FACING));
 		BlockState state = world.getBlockState(block_pos);
@@ -49,13 +49,15 @@ public class DyeItemDispenserBehavior extends FallibleItemDispenserBehavior{
 				
 				Direction direction = (Direction)pointer.getBlockState().get(DispenserBlock.FACING);
 				Direction direction2 = pointer.getWorld().isAir(block_pos.down()) ? direction : Direction.UP;
-				this.success = (((BlockItem)new_stack.getItem()).place(new AutomaticItemPlacementContext(pointer.getWorld(), block_pos, direction, new_stack, direction2)) == ActionResult.SUCCESS);
+				//this.success = (((BlockItem)new_stack.getItem()).place(new AutomaticItemPlacementContext(pointer.getWorld(), block_pos, direction, new_stack, direction2)) == ActionResult.SUCCESS);
+				this.setSuccess((((BlockItem)new_stack.getItem()).place(new AutomaticItemPlacementContext(pointer.getWorld(), block_pos, direction, new_stack, direction2)) == ActionResult.SUCCESS));
 				stack.decrement(1);
 			}
 			return stack;
 		}
 		
-		this.success = true;
+		//this.success = true;
+		this.setSuccess(true);
 		return super.dispenseSilently(pointer, stack);
 	}
 

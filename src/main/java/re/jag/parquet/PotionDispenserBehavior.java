@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 public class PotionDispenserBehavior extends FallibleItemDispenserBehavior {
 	public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) { 
-		this.success = false;
+		//this.success = false;
 		World world = pointer.getWorld();
 		BlockPos block_pos = pointer.getBlockPos().offset((Direction)pointer.getBlockState().get(DispenserBlock.FACING));
 		BlockState state = world.getBlockState(block_pos);
@@ -28,7 +28,8 @@ public class PotionDispenserBehavior extends FallibleItemDispenserBehavior {
 				int fill_level = state.get(CauldronBlock.LEVEL);
 				if(fill_level < 3) {
 					((CauldronBlock)block).setLevel(world, block_pos, state, fill_level + 1);
-					this.success = true;
+					//this.success = true;
+					this.setSuccess(true);
 					return new ItemStack(Items.GLASS_BOTTLE, 1);
 				}
 				return stack;

@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 public class BucketDispenserBehavior extends FallibleItemDispenserBehavior {
 	public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) { 
-		this.success = false;
+		//this.success = false;
 		World world = pointer.getWorld();
 		Item item;
 		BlockPos block_pos = pointer.getBlockPos().offset((Direction)pointer.getBlockState().get(DispenserBlock.FACING));
@@ -27,7 +27,7 @@ public class BucketDispenserBehavior extends FallibleItemDispenserBehavior {
 		if (block instanceof FluidDrainable) {
 			Fluid fluid = ((FluidDrainable)block).tryDrainFluid(world, block_pos, state);
 		
-			if (!(fluid instanceof net.minecraft.fluid.BaseFluid)) {
+			if (!(fluid instanceof net.minecraft.fluid.FlowableFluid/*BaseFluid*/)) {
 				return super.dispenseSilently(pointer, stack);
 			}
 			
@@ -35,7 +35,8 @@ public class BucketDispenserBehavior extends FallibleItemDispenserBehavior {
 		} else if (block instanceof CauldronBlock) {
 			if(state.get(CauldronBlock.LEVEL) >= 3) {
 				((CauldronBlock)block).setLevel(world, block_pos, state, 0);
-				this.success = true;
+				//this.success = true;
+				this.setSuccess(true);
 				item = Items.WATER_BUCKET;
 			} else {
 				return stack;

@@ -34,27 +34,32 @@ public class GlassBottleDispenserBehavior extends FallibleItemDispenserBehavior 
 	}
 	
 	public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
-		this.success = false;
+		//this.success = false;
 		World world = pointer.getWorld();
 		BlockPos block_pos = pointer.getBlockPos().offset((Direction)pointer.getBlockState().get(DispenserBlock.FACING));
 		BlockState state = world.getBlockState(block_pos);
 		Block block = state.getBlock();
-		if (block.matches(BlockTags.BEEHIVES) && ((Integer)state.get(BeehiveBlock.HONEY_LEVEL)).intValue() >= 5) {
+		//if (block.matches(BlockTags.BEEHIVES) && ...
+		if (state.method_27851(BlockTags.BEEHIVES, (abstractBlockState) -> { return abstractBlockState.contains(BeehiveBlock.HONEY_LEVEL); })
+				&& ((Integer)state.get(BeehiveBlock.HONEY_LEVEL)).intValue() >= 5) {
 			((BeehiveBlock)state.getBlock()).takeHoney(world, state, block_pos, null, BeehiveBlockEntity.BeeState.BEE_RELEASED);
-			this.success = true;
+			//this.success = true;
+			this.setSuccess(true);
 			return insert_first_free_or_drop(pointer, stack, new ItemStack(Items.HONEY_BOTTLE));
 		}
 		if (block instanceof CauldronBlock) {
 			int fill_level = state.get(CauldronBlock.LEVEL);
 			if(fill_level > 0) {
 				((CauldronBlock)block).setLevel(world, block_pos, state, fill_level - 1);
-				this.success = true;
+				//this.success = true;
+				this.setSuccess(true);
 				return insert_first_free_or_drop(pointer, stack, PotionUtil.setPotion( new ItemStack(Items.POTION), Potions.WATER ) );
 			}
 			return stack;
 		}
 		if (world.getFluidState(block_pos).matches(FluidTags.WATER)) {
-			this.success = true;
+			//this.success = true;
+			this.setSuccess(true);
 			return insert_first_free_or_drop(pointer, stack, PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER));
 		} 
 		return super.dispenseSilently(pointer, stack);

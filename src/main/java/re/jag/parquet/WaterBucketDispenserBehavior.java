@@ -16,15 +16,16 @@ import net.minecraft.world.World;
 public class WaterBucketDispenserBehavior extends FallibleItemDispenserBehavior{
 	
 	public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) { 
-		this.success = false;
+		//this.success = false;
 		
 		BucketItem bucket_item = (BucketItem)stack.getItem(); 
 		BlockPos block_pos = pointer.getBlockPos().offset((Direction)pointer.getBlockState().get(DispenserBlock.FACING)); 
 		World world = pointer.getWorld(); 
 		if (bucket_item.placeFluid(null, world, block_pos, null)) { 
 			bucket_item.onEmptied(world, stack, block_pos); 
-			this.success = true;
-			return new ItemStack(Items.BUCKET); 
+			//this.success = true;
+			this.setSuccess(true);
+			return new ItemStack(Items.BUCKET);
 		}
 		
 		BlockState state = pointer.getWorld().getBlockState(block_pos);
@@ -36,11 +37,12 @@ public class WaterBucketDispenserBehavior extends FallibleItemDispenserBehavior{
 			}
 			((CauldronBlock)facing_block).setLevel(world, block_pos, state, 3);
 			
-			this.success = true;
+			//this.success = true;
+			this.setSuccess(true);
 			return new ItemStack(Items.BUCKET, 1);
 		}
 
-		this.success = true;
+		this.setSuccess(true);
 		return this.dispense(pointer, stack); 
 	}
 }
