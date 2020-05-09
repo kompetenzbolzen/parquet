@@ -4,14 +4,14 @@
   "package": "re.jag.parquet.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-  ],
-  "server": [
     "MinecraftServerMixin",
     "CommandManagerMixin",
     "ServerPlayerEntityMixin",
     "BootstrapMixin",
     "FireWorkItemMixin",
     "SellMapFactoryMixin"
+  ],
+  "server": [
   ],
   "client": [
   ],
