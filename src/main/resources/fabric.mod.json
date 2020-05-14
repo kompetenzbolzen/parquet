@@ -2,15 +2,14 @@
   "schemaVersion": 1,
   "id": "parquet",
   "version": "${version}",
-
-  "name": "Vanilla",
-  "description": "Who knows",
+  "name": "parquet",
+  "description": "Random stuff",
   "authors": [
     "kompetenzbolzen"
   ],
   "contact": {
-    "homepage": "https://jag.re/",
-    "sources": "https://github.com/"
+    "homepage": "https://github.com/kompetenzbolzen/parquet",
+    "sources": "https://github.com/kompetenzbolzen/parquet"
   },
 
   "license": "",
