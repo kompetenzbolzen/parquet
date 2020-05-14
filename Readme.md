@@ -22,11 +22,13 @@ List all player savefiles, UUIDs are resolved to names if in usercache
 
 #### `stats`
 
-Query user statistics and import them to the scoreboard. This work for both online and offline players, if they are in usercache. 
+Query user statistics and import them to the scoreboard. This work for both online and offline players, if they are in
+usercache.
 
 `/savedata stats PLAYER CRITERIA [import OBJECTIVE [MULTIPLIER]]`
 
-If `MULTIPLIER < 0` the score is modified with `1/MULTIPLIER`, since FloatArgumentType does not support exponentials like 1.3e-4
+If `MULTIPLIER < 0` the score is modified with `1/MULTIPLIER`, since FloatArgumentType does not support exponentials
+like 1.3e-4
 
 ## Features
 
@@ -45,14 +47,25 @@ A dispenser pointing into a cauldron can:
 
 A dispenser pointing into an undyed Shulker Box can apply a color.
 
+### Advanced Villager Trade tracking
+
+`minecraft.custom:minecraft.traded_with_villager` only counts the amount of interactions with a Villager.
+Parquet provides more granular tracking of trades by counting every item purchased from Villagers under
+`minecraft.traded:<item>`.
+
+**Note:** Since `/scoreboard` command completion is handled client-side, they might not show up and have to be entered
+manually.
+
 ## Fixes
 
 ### [MC-111534](https://bugs.mojang.com/browse/MC-111534)
 
-Stat `minecraft.used:minecraft.firework_rocket` is only incremented, when the rocket is used on the ground, not during elytra flight.
+Stat `minecraft.used:minecraft.firework_rocket` is only incremented, when the rocket is used on the ground, not during
+elytra flight.
 
 ## "Fixes"
 
 ### [MC-126244](https://bugs.mojang.com/browse/MC-126244)
 
-Cartographer map trade replaced with dummy map around (0,0) to mitigate server crash in large worlds due to poor implementation of locateStructure.
+Cartographer map trade replaced with dummy map around (0,0) to mitigate server crash in large worlds due to poor
+implementation of locateStructure.
