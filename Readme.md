@@ -25,7 +25,7 @@ List all player savefiles, UUIDs are resolved to names if in usercache
 Query user statistics and import them to the scoreboard. This work for both online and offline players, if they are in
 usercache.
 
-`/savedata stats PLAYER CRITERIA [import OBJECTIVE [MULTIPLIER]]`
+`/savedata stats PLAYER STATISTIC [import OBJECTIVE [MULTIPLIER]]`
 
 If `MULTIPLIER < 0` the score is modified with `1/MULTIPLIER`, since FloatArgumentType does not support exponentials
 like 1.3e-4
@@ -33,6 +33,10 @@ like 1.3e-4
 ## Features
 
 ### Dispenser Behavior
+
+#### Water Bottle
+
+Water Bottles can be filled with a Dispenser from a water source, just like Buckets.
 
 #### Cauldron
 A dispenser pointing into a cauldron can:
