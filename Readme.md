@@ -1,6 +1,6 @@
 # Parquet
 
-Minecraft Java 1.15.2 Mod for [Fabric](https://fabricmc.net/) mod loader.
+Minecraft Java 1.16-pre Mod for [Fabric](https://fabricmc.net/) mod loader.
 
 ## Commands
 
