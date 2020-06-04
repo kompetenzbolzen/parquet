@@ -20,7 +20,7 @@ public class CommandManagerMixin {
     private CommandDispatcher<ServerCommandSource> dispatcher;
 	
 	@Inject(method = "<init>", at = @At("RETURN"))
-    private void onRegister(boolean boolean_1, CallbackInfo ci) {
+    private void onRegister(CallbackInfo ci) {
         Parquet.registerCommands(this.dispatcher);
     }
 }

@@ -1,6 +1,9 @@
 package re.jag.parquet.mixin;
 
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.registry.Registry;
+import net.minecraft.util.registry.RegistryKey;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,7 +16,6 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
-import net.minecraft.world.dimension.DimensionType;
 import re.jag.parquet.interfaces.CameraModeData;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundTag;
@@ -28,7 +30,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Ca
 	}
 
 	private double saved_x, saved_y, saved_z;
-	private int saved_dimension;
+	private String saved_dimension;
 	private boolean save_active = false;
 	
 	@Shadow
@@ -40,7 +42,9 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Ca
 	@Inject(method="writeCustomDataToTag", at = @At("RETURN"))
 	private void onWriteCustomDataToTag(CompoundTag arg, CallbackInfo ci) {
 		arg.put("ParquetSavedPos", (Tag)toListTag(new double[] { saved_x, saved_y, saved_z }));
-		arg.putInt("ParquetSavedDimension", saved_dimension);
+
+		arg.putString("ParquetSavedDimension", this.saved_dimension);
+
 		arg.putBoolean("ParquetSaveActive", save_active);
 	}
 	
@@ -48,7 +52,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Ca
 	private void onReadCustomDataFromTag(CompoundTag arg, CallbackInfo ci) {
 		ListTag lv = arg.getList("ParquetSavedPos", 6);
 		
-		this.saved_dimension = arg.getInt("ParquetSavedDimension");
+		this.saved_dimension = arg.getString("ParquetSavedDimension");
 		
 		this.save_active = arg.getBoolean("ParquetSaveActive");
 		
@@ -65,9 +69,13 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Ca
 			this.saved_x = getX();
 			this.saved_y = getY();
 			this.saved_z = getZ();
-			
-			this.saved_dimension = this.dimension.getRawId();
-			
+
+			this.getServer();
+
+			this.getEntityWorld().getDimensionRegistryKey().getValue();
+
+			this.saved_dimension = this.world.getRegistryKey().getValue().toString();
+
 			this.save_active = true;
 			
 			return true;
@@ -77,7 +85,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Ca
 	
 	public boolean restoreCameraPosition() {
 		if (this.save_active) {
-			this.teleport(server.getWorld(DimensionType.byRawId(saved_dimension)), saved_x, saved_y, saved_z, 0,0);
+			this.teleport(server.getWorld( RegistryKey.of(Registry.DIMENSION, new Identifier(this.saved_dimension))) , saved_x, saved_y, saved_z, 0,0);
 			
 			this.save_active = false;
 			
