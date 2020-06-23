@@ -22,8 +22,8 @@ import net.minecraft.scoreboard.ScoreboardPlayerScore;
 import net.minecraft.scoreboard.ServerScoreboard;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.WorldSavePath;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.dimension.DimensionType;
 import re.jag.parquet.Parquet;
 import net.minecraft.stat.ServerStatHandler;
 import net.minecraft.stat.Stat;
@@ -163,31 +163,24 @@ public class Savedata {
 			return player.getStatHandler();
 		}
 
-		return null;
-
-		//TODO 1.16 fix
-
-		//WorldSaveHandler reworked
-
-		/*
+		// [ ] TODO 1.16 fix test
 		GameProfile profile = source.getMinecraftServer().getUserCache().findByName(player_name);
 		if (profile == null) {
 			Parquet.LOG.debug("Savedata: User not in Usercache");
 			return null;
 		}
-	
+
 		UUID player_uuid = profile.getId();
-		
-		File file = new File(source.getMinecraftServer().getWorld(DimensionType.OVERWORLD).getSaveHandler().getWorldDir(), "stats");
+
+		File file = source.getMinecraftServer().getSavePath(WorldSavePath.STATS).toFile();
 		File file2 = new File(file, player_uuid + ".json");
-	
+
 		if (!file2.exists()) {
 			Parquet.LOG.debug("Savedata: user stat file not found");
 			return null;
 		}
 
 		return new ServerStatHandler(source.getMinecraftServer(), file2);
-		*/
 	}
 
 	private static int print_player_stat(ServerCommandSource source, String player, String stat) {

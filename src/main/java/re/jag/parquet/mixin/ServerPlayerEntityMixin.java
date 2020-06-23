@@ -30,7 +30,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Ca
 	}
 
 	private double saved_x, saved_y, saved_z;
-	private String saved_dimension;
+	private String saved_dimension = "";
 	private boolean save_active = false;
 	
 	@Shadow
@@ -69,10 +69,6 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Ca
 			this.saved_x = getX();
 			this.saved_y = getY();
 			this.saved_z = getZ();
-
-			this.getServer();
-
-			this.getEntityWorld().getDimensionRegistryKey().getValue();
 
 			this.saved_dimension = this.world.getRegistryKey().getValue().toString();
 

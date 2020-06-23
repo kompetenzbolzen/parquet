@@ -57,7 +57,7 @@ public class GlassBottleDispenserBehavior extends FallibleItemDispenserBehavior 
 			}
 			return stack;
 		}
-		if (world.getFluidState(block_pos).matches(FluidTags.WATER)) {
+		if (world.getFluidState(block_pos).isIn(FluidTags.WATER)) {
 			//this.success = true;
 			this.setSuccess(true);
 			return insert_first_free_or_drop(pointer, stack, PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER));
