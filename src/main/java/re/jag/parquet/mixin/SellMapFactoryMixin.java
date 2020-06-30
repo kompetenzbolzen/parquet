@@ -18,6 +18,8 @@ import org.spongepowered.asm.mixin.Shadow;
 
 import java.util.Random;
 
+// No longer activated, but left here, just in case
+
 @Mixin(targets="net.minecraft.village.TradeOffers$SellMapFactory")
 public class SellMapFactoryMixin implements TradeOffers.Factory {
     @Shadow
