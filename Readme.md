@@ -1,6 +1,6 @@
 # Parquet
 
-Minecraft Java 1.16-pre Mod for [Fabric](https://fabricmc.net/) mod loader.
+Minecraft Java 1.16 Mod for [Fabric](https://fabricmc.net/) mod loader.
 
 ## Commands
 
@@ -70,6 +70,8 @@ elytra flight.
 ## "Fixes"
 
 ### [MC-126244](https://bugs.mojang.com/browse/MC-126244)
+
+**Deactivated**
 
 Cartographer map trade replaced with dummy map around (0,0) to mitigate server crash in large worlds due to poor
 implementation of locateStructure.
