@@ -71,7 +71,7 @@ elytra flight.
 
 ### [MC-126244](https://bugs.mojang.com/browse/MC-126244)
 
-**Deactivated**
+Bug is marked as fixed, but still crashes for me. GG!
 
 Cartographer map trade replaced with dummy map around (0,0) to mitigate server crash in large worlds due to poor
 implementation of locateStructure.

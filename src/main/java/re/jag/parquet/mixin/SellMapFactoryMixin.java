@@ -19,13 +19,12 @@ import org.spongepowered.asm.mixin.Shadow;
 import java.util.Random;
 
 // No longer activated, but left here, just in case
+// Update: Turns out Mojang sets bugs to fixed with dice
 
 @Mixin(targets="net.minecraft.village.TradeOffers$SellMapFactory")
 public class SellMapFactoryMixin implements TradeOffers.Factory {
     @Shadow
     private int price;
-    @Shadow
-    private String structure;
     @Shadow
     private MapIcon.Type iconType;
     @Shadow
@@ -43,7 +42,7 @@ public class SellMapFactoryMixin implements TradeOffers.Factory {
             ItemStack itemStack = FilledMapItem.createMap(serverWorld, blockPos.getX(), blockPos.getZ(), (byte)2, true, true);
             FilledMapItem.fillExplorationMap(serverWorld, itemStack);
             MapState.addDecorationsTag(itemStack, blockPos, "+", this.iconType);
-            itemStack.setCustomName(new LiteralText("You shall not crash"));
+            itemStack.setCustomName(new LiteralText("Mojang-award for code quality"));
             return new TradeOffer(new ItemStack(Items.EMERALD, this.price), new ItemStack(Items.COMPASS), itemStack, this.maxUses, this.experience, 0.2F);
         }
     }

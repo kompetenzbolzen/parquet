@@ -10,7 +10,8 @@
     "BootstrapMixin",
     "FireWorkItemMixin",
     "AbstractTraderEntityMixin",
-    "StatsMixin"
+    "StatsMixin",
+    "SellMapFactoryMixin"
   ],
   "server": [
   ],
