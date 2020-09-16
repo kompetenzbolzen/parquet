@@ -30,18 +30,19 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Ca
 	}
 
 	private double saved_x, saved_y, saved_z;
+	private float saved_pitch, saved_yaw;
 	private String saved_dimension = "";
 	private boolean save_active = false;
 	
 	@Shadow
 	public MinecraftServer server;
-	
+
 	@Shadow
 	public void teleport(ServerWorld arg, double d, double e, double f, float g, float h) {}
 	
 	@Inject(method="writeCustomDataToTag", at = @At("RETURN"))
 	private void onWriteCustomDataToTag(CompoundTag arg, CallbackInfo ci) {
-		arg.put("ParquetSavedPos", (Tag)toListTag(new double[] { saved_x, saved_y, saved_z }));
+		arg.put("ParquetSavedPos", (Tag)toListTag(new double[] { saved_x, saved_y, saved_z, saved_yaw, saved_pitch }));
 
 		arg.putString("ParquetSavedDimension", this.saved_dimension);
 
@@ -51,7 +52,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Ca
 	@Inject(method="readCustomDataFromTag", at = @At("RETURN"))
 	private void onReadCustomDataFromTag(CompoundTag arg, CallbackInfo ci) {
 		ListTag lv = arg.getList("ParquetSavedPos", 6);
-		
+
 		this.saved_dimension = arg.getString("ParquetSavedDimension");
 		
 		this.save_active = arg.getBoolean("ParquetSaveActive");
@@ -60,6 +61,8 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Ca
 			this.saved_x = lv.getDouble(0);
 			this.saved_y = lv.getDouble(1);
 			this.saved_z = lv.getDouble(2);
+			this.saved_yaw   = (float) lv.getDouble(3);
+			this.saved_pitch = (float) lv.getDouble(4);
 		}
 	}
 	
@@ -69,6 +72,9 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Ca
 			this.saved_x = getX();
 			this.saved_y = getY();
 			this.saved_z = getZ();
+
+			this.saved_pitch = pitch;
+			this.saved_yaw = yaw;
 
 			this.saved_dimension = this.world.getRegistryKey().getValue().toString();
 
@@ -81,7 +87,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Ca
 	
 	public boolean restoreCameraPosition() {
 		if (this.save_active) {
-			this.teleport(server.getWorld( RegistryKey.of(Registry.DIMENSION, new Identifier(this.saved_dimension))) , saved_x, saved_y, saved_z, 0,0);
+			this.teleport(server.getWorld( RegistryKey.of(Registry.DIMENSION, new Identifier(this.saved_dimension))) , saved_x, saved_y, saved_z, saved_yaw, saved_pitch);
 			
 			this.save_active = false;
 			
