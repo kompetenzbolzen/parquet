@@ -38,7 +38,6 @@ public class Calculator {
 
 			if (Math.abs(last_break - i) > 1 && op_weight > 0) {
 				parts.add(element);
-				//parts.add(String.copyValueOf(expression_array, i, 1));
 				operators.add(String.copyValueOf(expression_array, i, 1));
 
 				element = "";
@@ -76,7 +75,6 @@ public class Calculator {
 		return 0;
 	}
 
-	@Nullable
 	private static Integer parse_operand(String _operand, ServerCommandSource _source) {
 		Integer operand = null;
 
@@ -127,7 +125,6 @@ public class Calculator {
 		return get_operator_weight(_s.toCharArray()[0]);
 	}
 
-	@Nullable
 	private static String execute_operation(String _operator, String _left, String _right, ServerCommandSource _source) {
 		String result = null;
 
