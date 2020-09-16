@@ -30,6 +30,14 @@ usercache.
 If `MULTIPLIER < 0` the score is modified with `1/MULTIPLIER`, since FloatArgumentType does not support exponentials
 like 1.3e-4
 
+### `/r`
+
+Calculator for simple mathematical expressions.
+Supported operators: `+-*/`
+
+The player's coordinates are available though variables `x` `y` `z`.
+
+
 ## Features
 
 ### Dispenser Behavior
