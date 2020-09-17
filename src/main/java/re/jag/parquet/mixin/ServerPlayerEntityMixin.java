@@ -1,5 +1,6 @@
 package re.jag.parquet.mixin;
 
+import net.minecraft.server.network.ServerPlayerInteractionManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.Registry;
@@ -25,8 +26,8 @@ import net.minecraft.nbt.Tag;
 @Mixin(ServerPlayerEntity.class)
 public abstract class ServerPlayerEntityMixin extends PlayerEntity implements CameraModeData{
 	
-	public ServerPlayerEntityMixin(World world, BlockPos pos, GameProfile profile) {
-		super(world, pos, profile);
+	public ServerPlayerEntityMixin(World world, BlockPos pos, float yaw, GameProfile profile) {
+		super(world, pos, yaw, profile);
 	}
 
 	private double saved_x, saved_y, saved_z;

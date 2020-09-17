@@ -16,7 +16,7 @@ import com.mojang.authlib.GameProfile;
 
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.command.arguments.ObjectiveArgumentType;
+import net.minecraft.command.argument.ObjectiveArgumentType;
 import net.minecraft.scoreboard.ScoreboardObjective;
 import net.minecraft.scoreboard.ScoreboardPlayerScore;
 import net.minecraft.scoreboard.ServerScoreboard;
