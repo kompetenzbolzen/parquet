@@ -37,6 +37,9 @@ Supported operators: `+-*/`
 
 The player's coordinates are available though variables `x` `y` `z`.
 
+### `/dt`
+
+Displays ticks since last invocation
 
 ## Features
 
