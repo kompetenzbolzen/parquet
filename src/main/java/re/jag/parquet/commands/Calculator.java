@@ -58,6 +58,10 @@ public class Calculator {
 					level_count++;
 
 					String result = execute_operation(operator, parts.get(o), parts.get(o+1), _source);
+
+					if (result == null)
+						return 1;
+
 					parts.set(o, result);
 					parts.remove(o+1);
 					operators.remove(o);
@@ -95,6 +99,7 @@ public class Calculator {
 						operand = (int)player.getPos().z;
 					break;
 				default:
+					operand = null;
 			}
 		}
 
