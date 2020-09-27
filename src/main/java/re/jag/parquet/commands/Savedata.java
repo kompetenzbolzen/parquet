@@ -42,7 +42,7 @@ public class Savedata {
 	                then(literal("stats").
 	                		then(argument("player", StringArgumentType.word()).
 	                				suggests( (c, b) -> suggestMatching(c.getSource().getPlayerNames() , b)).
-			                		then(argument("criteria", StringArgumentType.string()).
+			                		then(argument("criteria", StringArgumentType.greedyString()).
 							                suggests((c,b) -> suggestMatching(get_stat_list(), b)).
 			                				executes((c) -> print_player_stat (
 			                						c.getSource(),
@@ -91,7 +91,7 @@ public class Savedata {
 
 			while(stat_iter.hasNext()) {
 				Object object = stat_iter.next();
-				String stat_name = "\"" + Stat.getName(statType, object) + "\"";
+				String stat_name = Stat.getName(statType, object);
 				ret.add(stat_name);
 			}
 		}
