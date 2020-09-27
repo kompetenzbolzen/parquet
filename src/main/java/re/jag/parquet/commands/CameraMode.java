@@ -15,6 +15,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.LiteralText;
 import net.minecraft.world.GameMode;
+import re.jag.parquet.Parquet;
 import re.jag.parquet.interfaces.CameraModeData;
 
 public class CameraMode {
@@ -55,7 +56,8 @@ public class CameraMode {
 	
 	private static int camera(ServerCommandSource source, ServerPlayerEntity player) {
 		if (! ((CameraModeData)player).saveCameraPosition() ) {
-			source.sendFeedback(new LiteralText("Reset location already exists"), false);
+			//source.sendFeedback(new LiteralText("Reset location already exists"), false);
+			Parquet.LOG.debug("x: Reset location already exists for " + player.getName());
 		} else {
 			add_status_effects(player);
 		}
@@ -69,7 +71,8 @@ public class CameraMode {
 	
 	private static int survival(ServerCommandSource source, ServerPlayerEntity player) {
 		if (! ((CameraModeData)player).restoreCameraPosition() ) {
-			source.sendFeedback(new LiteralText("No reset location stored"), false);
+			//source.sendFeedback(new LiteralText("No reset location stored"), false);
+			Parquet.LOG.debug("a: No reset location for " + player.getName());
 		} else {
 			remove_status_effects(player);
 		}
@@ -82,7 +85,8 @@ public class CameraMode {
 	//Reset to server default gamemode
 	private static int defmode(ServerCommandSource source, ServerPlayerEntity player) {
 		if (! ((CameraModeData)player).restoreCameraPosition() ) {
-			source.sendFeedback(new LiteralText("No reset location stored"), false);
+			//source.sendFeedback(new LiteralText("No reset location stored"), false);
+			Parquet.LOG.debug("d: No reset location for " + player.getName());
 		} else {
 			remove_status_effects(player);
 		}
