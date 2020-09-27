@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.*;
 
 import static net.minecraft.server.command.CommandManager.literal;
-import static net.minecraft.server.command.CommandSource.suggestMatching;
+import static net.minecraft.command.CommandSource.suggestMatching;
 import static net.minecraft.server.command.CommandManager.argument;
 
 import com.google.common.collect.Lists;

@@ -1,6 +1,6 @@
 package re.jag.parquet.mixin;
 
-import net.minecraft.entity.passive.AbstractTraderEntity;
+import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.village.TradeOffer;
@@ -10,9 +10,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import re.jag.parquet.CustomStats;
-import re.jag.parquet.Parquet;
 
-@Mixin(AbstractTraderEntity.class)
+@Mixin(MerchantEntity.class)
 public class AbstractTraderEntityMixin {
 	@Shadow
 	PlayerEntity customer;
