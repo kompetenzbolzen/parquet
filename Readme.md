@@ -41,6 +41,10 @@ The player's coordinates are available though variables `x` `y` `z`.
 
 Displays ticks since last invocation
 
+### `/rename`
+
+Renames stack in hand.
+
 ## Features
 
 ### Dispenser Behavior

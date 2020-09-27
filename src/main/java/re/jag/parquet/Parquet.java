@@ -13,10 +13,7 @@ import net.minecraft.item.DyeItem;
 import net.minecraft.item.Items;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.DyeColor;
-import re.jag.parquet.commands.Calculator;
-import re.jag.parquet.commands.CameraMode;
-import re.jag.parquet.commands.Savedata;
-import re.jag.parquet.commands.TimeDIff;
+import re.jag.parquet.commands.*;
 
 public class Parquet implements ModInitializer {
 	public static final Logger LOG = LogManager.getLogger();
@@ -31,6 +28,7 @@ public class Parquet implements ModInitializer {
 		CameraMode.register(dispatcher);
 		Calculator.register(dispatcher);
 		TimeDIff.register(dispatcher);
+		Rename.register(dispatcher);
 
 		LOG.info("[PQ] Registered commands");
 	}
