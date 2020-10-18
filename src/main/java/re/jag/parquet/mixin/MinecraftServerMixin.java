@@ -11,6 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MinecraftServerMixin {
 	@Inject(method = "getServerModName", at = @At("RETURN"), cancellable = true)
 	protected void onGetServerModName(CallbackInfoReturnable<String> cir) {
-		cir.setReturnValue("vanilla+™");
+		cir.setReturnValue("vanilla++™");
 	}
 }
