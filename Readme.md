@@ -66,6 +66,10 @@ A dispenser pointing into a cauldron can:
 
 A dispenser pointing into an undyed Shulker Box can apply a color.
 
+#### Music Discs
+
+Music Discs can be played using a dispenser.
+
 ### Advanced Villager Trade tracking
 
 `minecraft.custom:minecraft.traded_with_villager` only counts the amount of interactions with a Villager.
