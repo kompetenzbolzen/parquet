@@ -1,10 +1,6 @@
 package re.jag.parquet;
 
 import net.minecraft.item.MusicDiscItem;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,7 +16,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.util.DyeColor;
 import re.jag.parquet.commands.*;
 
-import net.minecraft.util.registry.Registry;
+import re.jag.parquet.dispenser.*;
 
 public class Parquet implements ModInitializer {
 	public static final Logger LOG = LogManager.getLogger();
@@ -45,7 +41,7 @@ public class Parquet implements ModInitializer {
 		//refactor CauldronBlock onUse
 		
 		//This is a rather hacky implementation
-		DispenserBlock.registerBehavior(Blocks.SHULKER_BOX.asItem(), new ShulkerPlacementDispenserBehavior());	
+		DispenserBlock.registerBehavior(Blocks.SHULKER_BOX.asItem(), new ShulkerPlacementDispenserBehavior());
 		for (DyeColor dye_color : DyeColor.values()) {
 			DispenserBlock.registerBehavior(ShulkerBoxBlock.get(dye_color).asItem(), new ShulkerPlacementDispenserBehavior());
 			

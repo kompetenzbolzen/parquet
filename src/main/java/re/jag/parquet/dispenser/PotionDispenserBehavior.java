@@ -1,4 +1,4 @@
-package re.jag.parquet;
+package re.jag.parquet.dispenser;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

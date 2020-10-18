@@ -1,4 +1,4 @@
-package re.jag.parquet;
+package re.jag.parquet.dispenser;
 
 import java.util.List;
 
