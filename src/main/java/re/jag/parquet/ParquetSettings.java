@@ -21,6 +21,8 @@ public class ParquetSettings {
 	public final boolean command_rename;
 	public final boolean command_timediff;
 
+	private boolean changed_config = false;
+
 	public ParquetSettings(String _properties_file) {
 		Path path = FileSystems.getDefault().getPath(_properties_file);
 		load(path);
@@ -35,7 +37,8 @@ public class ParquetSettings {
 		this.command_rename = get_boolean("command-rename", true);
 		this.command_timediff = get_boolean("command-timediff", true);
 
-		save(path);
+		if(changed_config)
+			save(path);
 	}
 
 	private void load(Path _path) {
@@ -62,6 +65,7 @@ public class ParquetSettings {
 		String val = properties.getProperty(_name);
 		if (val == null) {
 			properties.setProperty(_name, _default);
+			changed_config = true;
 			return _default;
 		}
 		return val;
