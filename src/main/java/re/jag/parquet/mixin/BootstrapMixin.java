@@ -14,6 +14,6 @@ public abstract class BootstrapMixin {
 
 	@Inject(method="initialize", at = @At("RETURN"))
 	private static void onInitialize(CallbackInfo ci) {
-		Parquet.registerCustomDispenserBehavior();
+		Parquet.onBootstrap();
 	}
 }

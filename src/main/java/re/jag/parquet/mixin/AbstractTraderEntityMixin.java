@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import re.jag.parquet.CustomStats;
+import re.jag.parquet.Parquet;
 
 @Mixin(MerchantEntity.class)
 public class AbstractTraderEntityMixin {
@@ -18,7 +19,7 @@ public class AbstractTraderEntityMixin {
 
 	@Inject(method="trade", at = @At("RETURN"))
 	private void onTrade(TradeOffer tradeOffer, CallbackInfo ci) {
-		if (this.customer instanceof ServerPlayerEntity) {
+		if ( Parquet.get_settings().stats_villager_trades && this.customer instanceof ServerPlayerEntity) {
 			((ServerPlayerEntity)customer).incrementStat( CustomStats.TRADED.getOrCreateStat( tradeOffer.getMutableSellItem().getItem() ) );
 		}
 	}

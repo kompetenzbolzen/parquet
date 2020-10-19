@@ -20,31 +20,40 @@ import re.jag.parquet.dispenser.*;
 
 public class Parquet implements ModInitializer {
 	public static final Logger LOG = LogManager.getLogger();
-	
+
+	private static ParquetSettings settings;
+
 	@Override
 	public void onInitialize() {
-	
+
 	}
 	
 	public static void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {
-		Savedata.register(dispatcher);
-		CameraMode.register(dispatcher);
-		Calculator.register(dispatcher);
-		TimeDIff.register(dispatcher);
-		Rename.register(dispatcher);
+		if(settings.command_savedata) Savedata.register(dispatcher);
+		if(settings.command_cameramode) CameraMode.register(dispatcher);
+		if(settings.command_calculator) Calculator.register(dispatcher);
+		if(settings.command_timediff) TimeDIff.register(dispatcher);
+		if(settings.command_rename) Rename.register(dispatcher);
 
 		LOG.info("[PQ] Registered commands");
 	}
 	
-	public static void registerCustomDispenserBehavior() {
-		//TODO Maybe rewrite Cauldron onUse to not only acccept players?
-		//refactor CauldronBlock onUse
-		
+	public static void onBootstrap() {
+		settings = new ParquetSettings("parquet.properties");
+
+		CustomStats.register_custom_stats();
+
+		if (settings.dispenser_custom_behavior) register_dispenser_behavior();
+	}
+
+	public static ParquetSettings get_settings(){return settings;}
+
+	private static void register_dispenser_behavior() {
 		//This is a rather hacky implementation
 		DispenserBlock.registerBehavior(Blocks.SHULKER_BOX.asItem(), new ShulkerPlacementDispenserBehavior());
 		for (DyeColor dye_color : DyeColor.values()) {
 			DispenserBlock.registerBehavior(ShulkerBoxBlock.get(dye_color).asItem(), new ShulkerPlacementDispenserBehavior());
-			
+
 			DispenserBlock.registerBehavior(DyeItem.byColor(dye_color).asItem(), new DyeItemDispenserBehavior());
 		}
 
@@ -64,7 +73,7 @@ public class Parquet implements ModInitializer {
 				(MusicDiscItem) Items.MUSIC_DISC_WAIT,
 				(MusicDiscItem) Items.MUSIC_DISC_PIGSTEP
 		};
-		for (MusicDiscItem item : music_discs )
+		for (MusicDiscItem item : music_discs)
 			DispenserBlock.registerBehavior(item, new MusicDiscDispenserBehavior());
 
 		DispenserBlock.registerBehavior(Items.WATER_BUCKET, new WaterBucketDispenserBehavior());
