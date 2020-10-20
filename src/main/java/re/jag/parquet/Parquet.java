@@ -29,7 +29,7 @@ public class Parquet implements ModInitializer {
 	}
 	
 	public static void registerCommands(CommandDispatcher<ServerCommandSource> dispatcher) {
-		if(settings.command_savedata) Savedata.register(dispatcher);
+		if(settings.command_stats) Stats.register(dispatcher);
 		if(settings.command_cameramode) CameraMode.register(dispatcher);
 		if(settings.command_calculator) Calculator.register(dispatcher);
 		if(settings.command_timediff) TimeDIff.register(dispatcher);

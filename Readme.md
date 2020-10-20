@@ -14,20 +14,18 @@ Invocation Location is saved and restored on exit to make it less exploitable
 
 Not using `/c` and `/s` to be carpet compatible
 
-### `/savedata`
+### `/stats <player>`
 
-#### `playersave list`
+#### `get <stat>`
 
-List all player savefiles, UUIDs are resolved to names if in usercache
-
-#### `stats`
-
-Query user statistics and import them to the scoreboard. This work for both online and offline players, if they are in
+Query user statistics. This work for both online and offline players, if they are in
 usercache.
 
-`/savedata stats PLAYER STATISTIC [import OBJECTIVE [MULTIPLIER]]`
+#### `import <scoreboard> [multiplier]`
 
-If `MULTIPLIER < 0` the score is modified with `1/MULTIPLIER`, since FloatArgumentType does not support exponentials
+import the corresponding user statistic to a scoreboard.
+
+If `multiplier < 0` the score is modified with `1/multiplier`, since FloatArgumentType does not support exponentials
 like 1.3e-4
 
 ### `/r`

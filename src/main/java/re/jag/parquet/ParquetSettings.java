@@ -16,7 +16,7 @@ public class ParquetSettings {
 	public final boolean stats_villager_trades;
 
 	public final boolean command_cameramode;
-	public final boolean command_savedata;
+	public final boolean command_stats;
 	public final boolean command_calculator;
 	public final boolean command_rename;
 	public final boolean command_timediff;
@@ -32,7 +32,7 @@ public class ParquetSettings {
 		this.stats_villager_trades = get_boolean("stats-villager-trades", true);
 
 		this.command_cameramode = get_boolean("command-cameramode", true);
-		this.command_savedata = get_boolean("command-savedata", true);
+		this.command_stats = get_boolean("command-stats", true);
 		this.command_calculator = get_boolean("command-calculator", true);
 		this.command_rename = get_boolean("command-rename", true);
 		this.command_timediff = get_boolean("command-timediff", true);
@@ -45,9 +45,8 @@ public class ParquetSettings {
 		try {
 			InputStream inp = Files.newInputStream(_path);
 			properties.load(inp);
-
 		} catch (IOException e) {
-			Parquet.LOG.error("Failed to read from " + _path.getFileName());
+			Parquet.LOG.warn("Failed to read from " + _path.getFileName());
 		}
 	}
 
@@ -55,7 +54,6 @@ public class ParquetSettings {
 		try {
 			OutputStream out = Files.newOutputStream(_path);
 			properties.store(out, "Parquet mod settings");
-
 		} catch (IOException e) {
 			Parquet.LOG.error("Failed to write to " + _path.getFileName());
 		}

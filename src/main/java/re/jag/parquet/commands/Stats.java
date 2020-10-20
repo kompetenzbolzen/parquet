@@ -29,45 +29,38 @@ import net.minecraft.stat.ServerStatHandler;
 import net.minecraft.stat.Stat;
 import net.minecraft.stat.StatType;
 
-public class Savedata {
+public class Stats {
 	public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-		 LiteralArgumentBuilder<ServerCommandSource> savedata = literal("savedata").
-	                requires(source -> source.hasPermissionLevel(4)).
-	                executes((c) -> help(c.getSource())).
-	                then( literal("playersave").
-                			then(literal("list").
-                				executes((c) -> list_local_saves(c.getSource()))
-                		)
-                	).
-	                then(literal("stats").
-	                		then(argument("player", StringArgumentType.word()).
-	                				suggests( (c, b) -> suggestMatching(c.getSource().getPlayerNames() , b)).
-			                		then(argument("criteria", StringArgumentType.greedyString()).
-							                suggests((c,b) -> suggestMatching(get_stat_list(), b)).
-			                				executes((c) -> print_player_stat (
-			                						c.getSource(),
-			                						StringArgumentType.getString(c, "player"),
-			                						StringArgumentType.getString(c, "criteria")
-			                				)).
-			                				then(literal("import").then(argument("score", ObjectiveArgumentType.objective()).
-			                						executes((c) -> import_stat_to_scoreboard (
-			                								c.getSource(), 
-			                								StringArgumentType.getString(c, "player"),
-											                StringArgumentType.getString(c, "criteria"),
-			                								ObjectiveArgumentType.getWritableObjective(c, "score"), 1)).
-			                						then(argument("multiplier", FloatArgumentType.floatArg()).
-			                								executes((c) ->  import_stat_to_scoreboard(
-			                										c.getSource(), 
-			                										StringArgumentType.getString(c, "player"),
-													                StringArgumentType.getString(c, "criteria"),
-			                										ObjectiveArgumentType.getWritableObjective(c, "score"), 
-			                										FloatArgumentType.getFloat(c, "multiplier"))
-			                								)
-			                						)
-			                				))
-			                		))
-                	);
-		 dispatcher.register(savedata);
+		LiteralArgumentBuilder<ServerCommandSource> savedata = literal("stats").
+				requires(source -> source.hasPermissionLevel(4)).
+				executes((c) -> help(c.getSource())).
+				then(argument("player", StringArgumentType.word()).
+						suggests((c, b) -> suggestMatching(c.getSource().getPlayerNames(), b)).
+						then(literal("get").
+								then(argument("criteria", StringArgumentType.greedyString()).
+										suggests((c, b) -> suggestMatching(get_stat_list(), b)).
+										executes((c) -> print_player_stat(
+												c.getSource(),
+												StringArgumentType.getString(c, "player"),
+												StringArgumentType.getString(c, "criteria")
+										))
+								)).
+						then(literal("import").then(argument("score", ObjectiveArgumentType.objective()).
+								executes((c) -> import_stat_to_scoreboard(
+										c.getSource(),
+										StringArgumentType.getString(c, "player"),
+										ObjectiveArgumentType.getWritableObjective(c, "score"), 1)).
+								then(argument("multiplier", FloatArgumentType.floatArg()).
+										executes((c) -> import_stat_to_scoreboard(
+												c.getSource(),
+												StringArgumentType.getString(c, "player"),
+												ObjectiveArgumentType.getWritableObjective(c, "score"),
+												FloatArgumentType.getFloat(c, "multiplier"))
+										)
+								)
+						))
+				);
+		dispatcher.register(savedata);
 	}
 	
 	private static int help(ServerCommandSource source) {
@@ -121,35 +114,15 @@ public class Savedata {
 		return stat;
 	}
 
-	private static int list_local_saves(ServerCommandSource source) {
-		//TODO 1.16 fix
-
-		/*
-		String uuid_list[] = source.getMinecraftServer().getWorld(DimensionType.OVERWORLD).getSaveHandler().getSavedPlayerIds();
-		
-		for (int i = 0; i < uuid_list.length; i++) {
-			GameProfile profile = source.getMinecraftServer().getUserCache().getByUuid(UUID.fromString(uuid_list[i]));
-			String name = "N.A.";
-			
-			if(profile != null) 
-				 name = profile.getName();
-			
-			source.sendFeedback(new LiteralText(name + " (" + uuid_list[i] + ")"), false);
-		}
-		*/
-
-		source.sendError(new LiteralText("1.16 Incompatability"));
-		return 1;
-	}
-	
-	private static int import_stat_to_scoreboard(ServerCommandSource source, String player,String stat, ScoreboardObjective objective, float multiplier) {
-		int score = get_player_stat(source, player, stat);
+	private static int import_stat_to_scoreboard(ServerCommandSource source, String player, ScoreboardObjective objective, float multiplier) {
+		int score = get_player_stat(source, player, objective.getCriterion().getName());
 		if (score < 0)
 			return 0;
 		
 		ServerScoreboard server_scoreboard = source.getMinecraftServer().getScoreboard();
 		ScoreboardPlayerScore player_score = server_scoreboard.getPlayerScore(player, objective);
-		
+
+
 		int mod_score = multiplier >= 0 ? (int)((float)score * multiplier) : (int)((float)score / multiplier * (-1));
 		
 		player_score.setScore(mod_score);
