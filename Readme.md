@@ -18,7 +18,7 @@ Not using `/c` and `/s` to be carpet compatible
 
 #### `get <stat>`
 
-Query user statistics. This work for both online and offline players, if they are in
+Query user statistics. This works for both online and offline players, if they are in
 usercache.
 
 #### `import <scoreboard> [multiplier]`

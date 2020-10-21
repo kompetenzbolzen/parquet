@@ -14,6 +14,7 @@ public class ParquetSettings {
 	public final boolean dispenser_custom_behavior;
 
 	public final boolean stats_villager_trades;
+	public final boolean stats_send_to_client;
 
 	public final boolean command_cameramode;
 	public final boolean command_stats;
@@ -30,6 +31,7 @@ public class ParquetSettings {
 		this.dispenser_custom_behavior = get_boolean("dispenser-custom-behavior", true);
 
 		this.stats_villager_trades = get_boolean("stats-villager-trades", true);
+		this.stats_send_to_client = get_boolean("stats-send-to-client", false);
 
 		this.command_cameramode = get_boolean("command-cameramode", true);
 		this.command_stats = get_boolean("command-stats", true);
