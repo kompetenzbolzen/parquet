@@ -22,6 +22,8 @@ public class ParquetSettings {
 	public final boolean command_rename;
 	public final boolean command_timediff;
 
+	public final boolean better_no_fire_tick;
+
 	private boolean changed_config = false;
 
 	public ParquetSettings(String _properties_file) {
@@ -38,6 +40,8 @@ public class ParquetSettings {
 		this.command_calculator = get_boolean("command-calculator", true);
 		this.command_rename = get_boolean("command-rename", true);
 		this.command_timediff = get_boolean("command-timediff", true);
+
+		this.better_no_fire_tick = get_boolean("better-no-fire-tick", false);
 
 		if(changed_config)
 			save(path);

@@ -11,7 +11,8 @@
     "FireWorkItemMixin",
     "AbstractTraderEntityMixin",
     "SellMapFactoryMixin",
-    "StatisticsS2CPacketMixin"
+    "StatisticsS2CPacketMixin",
+    "FireBlockMixin"
   ],
   "server": [
   ],
