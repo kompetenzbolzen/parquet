@@ -11,7 +11,7 @@ public class CustomStats {
 	public static StatType<Item> TRADED;
 
 	public static void register_custom_stats() {
-		if(Parquet.get_settings().stats_villager_trades) TRADED = register_type("traded", Registry.ITEM);
+		if(Parquet.settings.stats_villager_trades) TRADED = register_type("traded", Registry.ITEM);
 	}
 
 	private static Identifier register(String _identifier, StatFormatter _formatter) {

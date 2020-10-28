@@ -19,7 +19,7 @@ public class AbstractTraderEntityMixin {
 
 	@Inject(method="trade", at = @At("RETURN"))
 	private void onTrade(TradeOffer tradeOffer, CallbackInfo ci) {
-		if ( Parquet.get_settings().stats_villager_trades && this.customer instanceof ServerPlayerEntity) {
+		if ( Parquet.settings.stats_villager_trades && this.customer instanceof ServerPlayerEntity) {
 			((ServerPlayerEntity)customer).incrementStat( CustomStats.TRADED.getOrCreateStat( tradeOffer.getMutableSellItem().getItem() ) );
 		}
 	}

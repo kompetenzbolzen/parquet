@@ -21,7 +21,7 @@ import re.jag.parquet.dispenser.*;
 public class Parquet implements ModInitializer {
 	public static final Logger LOG = LogManager.getLogger();
 
-	private static ParquetSettings settings;
+	public static final ParquetSettings settings = new ParquetSettings("parquet.properties");
 
 	@Override
 	public void onInitialize() {
@@ -39,14 +39,12 @@ public class Parquet implements ModInitializer {
 	}
 	
 	public static void onBootstrap() {
-		settings = new ParquetSettings("parquet.properties");
+		//settings = new ParquetSettings("parquet.properties");
 
 		CustomStats.register_custom_stats();
 
 		if (settings.dispenser_custom_behavior) register_dispenser_behavior();
 	}
-
-	public static ParquetSettings get_settings(){return settings;}
 
 	private static void register_dispenser_behavior() {
 		//This is a rather hacky implementation

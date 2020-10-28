@@ -29,7 +29,7 @@ public class StatisticsS2CPacketMixin {
 	 */
 	@Inject(method="write", at=@At("HEAD"), cancellable = true)
 	protected void onWrite(PacketByteBuf buf, CallbackInfo ci){
-		if (Parquet.get_settings().stats_send_to_client)
+		if (Parquet.settings.stats_send_to_client)
 			return;
 
 		Object2IntMap<Stat<?>> copy = ((Object2IntOpenHashMap)stats).clone();
@@ -40,7 +40,7 @@ public class StatisticsS2CPacketMixin {
 			Object2IntMap.Entry<Stat<?>> entry = (Object2IntMap.Entry)iter.next();
 			Stat<?> stat = (Stat)entry.getKey();
 
-			if( Parquet.get_settings().stats_villager_trades && stat.getType() == CustomStats.TRADED )
+			if( Parquet.settings.stats_villager_trades && stat.getType() == CustomStats.TRADED )
 				copy.removeInt(stat);
 		}
 
