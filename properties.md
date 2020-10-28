@@ -15,3 +15,8 @@ This causes clients to crash when trying to access statistics.
 
 `[true]/false`
 enable/disable single parquet commands
+
+## better-no-fire-tick
+
+`true/[false]`
+Make all blocks fire resistant

@@ -77,6 +77,11 @@ Parquet provides more granular tracking of trades by counting every item purchas
 **Note:** Since `/scoreboard` command completion is handled client-side, they might not show up and have to be entered
 manually.
 
+### Better no fireTick
+
+Makes all blocks fire resistant instead of changing firetick behavior.
+Using the gamerule `firetick` results in fires burning forever, even on non-flammable blocks.
+
 ## Fixes
 
 ### [MC-111534](https://bugs.mojang.com/browse/MC-111534)
