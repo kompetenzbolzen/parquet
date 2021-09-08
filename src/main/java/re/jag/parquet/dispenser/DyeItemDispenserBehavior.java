@@ -25,7 +25,7 @@ public class DyeItemDispenserBehavior extends FallibleItemDispenserBehavior{
 	public ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
 		//this.success = false;
 		World world = pointer.getWorld();
-		BlockPos block_pos = pointer.getBlockPos().offset((Direction)pointer.getBlockState().get(DispenserBlock.FACING));
+		BlockPos block_pos = pointer.getPos().offset((Direction)pointer.getBlockState().get(DispenserBlock.FACING));
 		BlockState state = world.getBlockState(block_pos);
 		Block block = state.getBlock();
 		Item item = stack.getItem();
@@ -41,8 +41,8 @@ public class DyeItemDispenserBehavior extends FallibleItemDispenserBehavior{
 				ItemStack dropped_stack = dropped_stacks.get(0);
 				ItemStack new_stack = new ItemStack(ShulkerBoxBlock.get(((DyeItem)item).getColor()));
 				
-				if (dropped_stack.hasTag()) {
-					new_stack.setTag(dropped_stack.getTag().copy());
+				if (dropped_stack.hasNbt()) {
+					new_stack.setNbt(dropped_stack.getNbt().copy());
 				}
 				
 				world.setBlockState(block_pos, Blocks.AIR.getDefaultState());

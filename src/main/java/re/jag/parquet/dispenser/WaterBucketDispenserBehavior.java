@@ -1,10 +1,8 @@
 package re.jag.parquet.dispenser;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.CauldronBlock;
-import net.minecraft.block.DispenserBlock;
+import net.minecraft.block.*;
 import net.minecraft.block.dispenser.FallibleItemDispenserBehavior;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BucketItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -19,11 +17,10 @@ public class WaterBucketDispenserBehavior extends FallibleItemDispenserBehavior{
 		//this.success = false;
 		
 		BucketItem bucket_item = (BucketItem)stack.getItem(); 
-		BlockPos block_pos = pointer.getBlockPos().offset((Direction)pointer.getBlockState().get(DispenserBlock.FACING)); 
+		BlockPos block_pos = pointer.getPos().offset((Direction)pointer.getBlockState().get(DispenserBlock.FACING));
 		World world = pointer.getWorld(); 
 		if (bucket_item.placeFluid(null, world, block_pos, null)) { 
-			bucket_item.onEmptied(world, stack, block_pos); 
-			//this.success = true;
+			bucket_item.onEmptied((PlayerEntity)null, world, stack, block_pos);
 			this.setSuccess(true);
 			return new ItemStack(Items.BUCKET);
 		}
@@ -32,12 +29,9 @@ public class WaterBucketDispenserBehavior extends FallibleItemDispenserBehavior{
 		Block facing_block = state.getBlock();
 		
 		if ( facing_block instanceof CauldronBlock) {
-			if (state.get(CauldronBlock.LEVEL) >= 3) {	
-				return stack;
-			}
-			((CauldronBlock)facing_block).setLevel(world, block_pos, state, 3);
-			
-			//this.success = true;
+			world.setBlockState(block_pos, Blocks.WATER_CAULDRON.getDefaultState().with(LeveledCauldronBlock.LEVEL, 3));
+			world.syncWorldEvent(1047, block_pos, 0);
+
 			this.setSuccess(true);
 			return new ItemStack(Items.BUCKET, 1);
 		}

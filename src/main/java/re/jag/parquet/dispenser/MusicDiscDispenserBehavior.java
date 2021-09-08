@@ -15,7 +15,7 @@ public class MusicDiscDispenserBehavior extends FallibleItemDispenserBehavior {
 	protected ItemStack dispenseSilently(BlockPointer pointer, ItemStack stack) {
 		World world = pointer.getWorld();
 		Direction direction = (Direction)pointer.getBlockState().get(DispenserBlock.FACING);
-		BlockPos block_pos = pointer.getBlockPos().offset(direction);
+		BlockPos block_pos = pointer.getPos().offset(direction);
 		BlockState state = world.getBlockState(block_pos);
 
 		if (state.isOf(Blocks.JUKEBOX)) {

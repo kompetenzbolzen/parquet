@@ -36,7 +36,7 @@ public class Rename {
 	}
 
 	private static boolean can_execute (ServerCommandSource _source) {
-		if(_source.getMinecraftServer().getDefaultGameMode().isCreative())
+		if(_source.getWorld().getServer().getDefaultGameMode().isCreative())
 			return true;
 
 		try {

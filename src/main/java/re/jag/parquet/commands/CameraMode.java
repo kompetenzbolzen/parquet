@@ -48,9 +48,9 @@ public class CameraMode {
 	}
 	
 	private static void remove_status_effects(ServerPlayerEntity player) {
-		player.networkHandler.sendPacket(new RemoveEntityStatusEffectS2CPacket(player.getEntityId(), StatusEffects.NIGHT_VISION));
+		player.networkHandler.sendPacket(new RemoveEntityStatusEffectS2CPacket(player.getId(), StatusEffects.NIGHT_VISION));
         player.removeStatusEffect(StatusEffects.NIGHT_VISION);
-        player.networkHandler.sendPacket(new RemoveEntityStatusEffectS2CPacket(player.getEntityId(), StatusEffects.CONDUIT_POWER));
+        player.networkHandler.sendPacket(new RemoveEntityStatusEffectS2CPacket(player.getId(), StatusEffects.CONDUIT_POWER));
         player.removeStatusEffect(StatusEffects.CONDUIT_POWER);
 	}
 	
@@ -61,8 +61,8 @@ public class CameraMode {
 		} else {
 			add_status_effects(player);
 		}
-		
-		player.setGameMode(GameMode.SPECTATOR);
+
+		player.changeGameMode(GameMode.SPECTATOR);
         player.addVelocity(0,0.1,0);
         player.networkHandler.sendPacket(new EntityVelocityUpdateS2CPacket(player));
         
@@ -77,7 +77,7 @@ public class CameraMode {
 			remove_status_effects(player);
 		}
 		
-		player.setGameMode(GameMode.SURVIVAL);
+		player.changeGameMode(GameMode.SURVIVAL);
         
 		return 1;
 	}
@@ -91,7 +91,7 @@ public class CameraMode {
 			remove_status_effects(player);
 		}
 		
-		player.setGameMode( player.getServer().getDefaultGameMode() );
+		player.changeGameMode( player.getServer().getDefaultGameMode() );
 
 		return 1;
 	}

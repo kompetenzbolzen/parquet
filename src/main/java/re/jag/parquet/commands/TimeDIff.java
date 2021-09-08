@@ -17,7 +17,7 @@ public class TimeDIff {
 	}
 
 	private static int dt(ServerCommandSource _source) {
-		int current = _source.getMinecraftServer().getTicks();
+		int current = _source.getWorld().getServer().getTicks();
 		_source.sendFeedback( new LiteralText( String.valueOf(current - last_server_time)), false) ;
 		last_server_time = current;
 		return 1;

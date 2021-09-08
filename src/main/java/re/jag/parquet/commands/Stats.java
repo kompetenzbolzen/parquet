@@ -16,7 +16,7 @@ import com.mojang.authlib.GameProfile;
 
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.command.argument.ObjectiveArgumentType;
+import net.minecraft.command.argument.ScoreboardObjectiveArgumentType;
 import net.minecraft.scoreboard.ScoreboardObjective;
 import net.minecraft.scoreboard.ScoreboardPlayerScore;
 import net.minecraft.scoreboard.ServerScoreboard;
@@ -45,16 +45,16 @@ public class Stats {
 												StringArgumentType.getString(c, "criteria")
 										))
 								)).
-						then(literal("import").then(argument("score", ObjectiveArgumentType.objective()).
+						then(literal("import").then(argument("score", ScoreboardObjectiveArgumentType.scoreboardObjective()).
 								executes((c) -> import_stat_to_scoreboard(
 										c.getSource(),
 										StringArgumentType.getString(c, "player"),
-										ObjectiveArgumentType.getWritableObjective(c, "score"), 1)).
+										ScoreboardObjectiveArgumentType.getWritableObjective(c, "score"), 1)).
 								then(argument("multiplier", FloatArgumentType.floatArg()).
 										executes((c) -> import_stat_to_scoreboard(
 												c.getSource(),
 												StringArgumentType.getString(c, "player"),
-												ObjectiveArgumentType.getWritableObjective(c, "score"),
+												ScoreboardObjectiveArgumentType.getWritableObjective(c, "score"),
 												FloatArgumentType.getFloat(c, "multiplier"))
 										)
 								)
@@ -119,7 +119,7 @@ public class Stats {
 		if (score < 0)
 			return 0;
 		
-		ServerScoreboard server_scoreboard = source.getMinecraftServer().getScoreboard();
+		ServerScoreboard server_scoreboard = source.getWorld().getServer().getScoreboard();
 		ScoreboardPlayerScore player_score = server_scoreboard.getPlayerScore(player, objective);
 
 
@@ -131,21 +131,23 @@ public class Stats {
 	}
 	
 	private static ServerStatHandler get_player_stat_handler(ServerCommandSource source, String player_name) {
-		ServerPlayerEntity player = source.getMinecraftServer().getPlayerManager().getPlayer(player_name);
+		ServerPlayerEntity player = source.getWorld().getServer().getPlayerManager().getPlayer(player_name);
 		if (player != null) {
 			return player.getStatHandler();
 		}
 
 		// [ ] TODO 1.16 fix test
-		GameProfile profile = source.getMinecraftServer().getUserCache().findByName(player_name);
-		if (profile == null) {
+		Optional<GameProfile> opt_profile = source.getWorld().getServer().getUserCache().findByName(player_name);
+		if (opt_profile.isEmpty()) {
 			Parquet.LOG.debug("Savedata: User not in Usercache");
 			return null;
 		}
 
+		GameProfile profile = opt_profile.get();
+
 		UUID player_uuid = profile.getId();
 
-		File file = source.getMinecraftServer().getSavePath(WorldSavePath.STATS).toFile();
+		File file = source.getWorld().getServer().getSavePath(WorldSavePath.STATS).toFile();
 		File file2 = new File(file, player_uuid + ".json");
 
 		if (!file2.exists()) {
@@ -153,7 +155,7 @@ public class Stats {
 			return null;
 		}
 
-		return new ServerStatHandler(source.getMinecraftServer(), file2);
+		return new ServerStatHandler(source.getWorld().getServer(), file2);
 	}
 
 	private static int print_player_stat(ServerCommandSource source, String player, String stat) {

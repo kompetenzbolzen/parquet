@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.At;
 
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.FireworkItem;
+import net.minecraft.item.FireworkRocketItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 import net.minecraft.stat.Stats;
 
 
-@Mixin(FireworkItem.class)
+@Mixin(FireworkRocketItem.class)
 public class FireWorkItemMixin extends Item{
 	
 	public FireWorkItemMixin(Settings settings) {

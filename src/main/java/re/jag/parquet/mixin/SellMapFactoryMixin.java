@@ -41,7 +41,7 @@ public class SellMapFactoryMixin implements TradeOffers.Factory {
             BlockPos blockPos = new BlockPos(0,0,0);
             ItemStack itemStack = FilledMapItem.createMap(serverWorld, blockPos.getX(), blockPos.getZ(), (byte)2, true, true);
             FilledMapItem.fillExplorationMap(serverWorld, itemStack);
-            MapState.addDecorationsTag(itemStack, blockPos, "+", this.iconType);
+            MapState.addDecorationsNbt(itemStack, blockPos, "+", this.iconType);
             itemStack.setCustomName(new LiteralText("Mojang-award for code quality"));
             return new TradeOffer(new ItemStack(Items.EMERALD, this.price), new ItemStack(Items.COMPASS), itemStack, this.maxUses, this.experience, 0.2F);
         }
