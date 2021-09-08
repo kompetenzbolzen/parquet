@@ -21,7 +21,7 @@ public class StatisticsS2CPacketMixin {
 	private Object2IntMap<Stat<?>> stats;
 
 	@Shadow
-	private <T> int getStatId(Stat<T> stat) { return 0; }
+	private <T> int getStatNetworkId(Stat<T> stat) { return 0; }
 
 	/*
 	 * Opening the statistics menu on client causes crash with custom stats enabled.
@@ -52,7 +52,7 @@ public class StatisticsS2CPacketMixin {
 			Stat<?> stat = (Stat)entry.getKey();
 
 			buf.writeVarInt(Registry.STAT_TYPE.getRawId(stat.getType()));
-			buf.writeVarInt(this.getStatId(stat));
+			buf.writeVarInt(this.getStatNetworkId(stat));
 			buf.writeVarInt(entry.getIntValue());
 		}
 

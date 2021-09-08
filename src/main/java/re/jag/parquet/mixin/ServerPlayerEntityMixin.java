@@ -41,7 +41,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Ca
 	@Shadow
 	public void teleport(ServerWorld arg, double d, double e, double f, float g, float h) {}
 	
-	@Inject(method="writeCustomDataToTag", at = @At("RETURN"))
+	@Inject(method="writeCustomDataToNbt", at = @At("RETURN"))
 	private void onWriteCustomDataToTag(NbtCompound arg, CallbackInfo ci) {
 		arg.put("ParquetSavedPos", (NbtElement) toNbtList(new double[] { saved_x, saved_y, saved_z, saved_yaw, saved_pitch }));
 
@@ -50,7 +50,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements Ca
 		arg.putBoolean("ParquetSaveActive", save_active);
 	}
 	
-	@Inject(method="readCustomDataFromTag", at = @At("RETURN"))
+	@Inject(method="readCustomDataFromNbt", at = @At("RETURN"))
 	private void onReadCustomDataFromTag(NbtCompound arg, CallbackInfo ci) {
 		NbtList lv = arg.getList("ParquetSavedPos", 6);
 
