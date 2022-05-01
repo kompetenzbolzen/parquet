@@ -41,7 +41,7 @@ public class Parquet implements ModInitializer {
 	public static void onBootstrap() {
 		//settings = new ParquetSettings("parquet.properties");
 
-		CustomStats.register_custom_stats();
+		// CustomStats.register_custom_stats();
 
 		if (settings.dispenser_custom_behavior) register_dispenser_behavior();
 	}
